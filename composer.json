@@ -1,0 +1,20 @@
+{
+    "name": "minhnhc/helper",
+    "type": "library",
+    "description": "A usefull form for Slim and Angular",
+    "keywords": ["form","slim","angular","sannomiya"],
+    "homepage": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Minh Nguyen",
+            "email": "minhnguyen6913@gmail.com",
+            "homepage": "",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {}
+    }
+}
