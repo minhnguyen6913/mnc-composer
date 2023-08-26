@@ -1,5 +1,5 @@
 <?php
-namespace Sannomiya\Database;
+namespace Minhnhc\Database;
 use App\Lib\Database\RecordSet;
 
 abstract class Database {
