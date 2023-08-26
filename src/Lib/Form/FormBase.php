@@ -1,8 +1,8 @@
 <?php
 
-namespace Sannomiya\Form;
+namespace Minhnhc\Form;
 
-use Sannomiya\Util\LanguagesInterface;
+use Minhnhc\Util\LanguagesInterface;
 
 class FormBase
 {

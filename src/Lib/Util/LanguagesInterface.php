@@ -1,5 +1,5 @@
 <?php
-namespace Sannomiya\Util;
+namespace Minhnhc\Util;
 
 interface LanguagesInterface
 {
