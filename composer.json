@@ -16,7 +16,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Sannomiya\\": "src/Lib/"
+            "Minhnhc\\": "src/Lib/"
         }
     }
 }
