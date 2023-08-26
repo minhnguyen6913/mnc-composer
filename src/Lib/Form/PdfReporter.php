@@ -1,5 +1,5 @@
 <?php
-namespace Sannomiya\Form;
+namespace Minhnhc\Form;
 
 use Mpdf\Mpdf;
 class PdfReporter extends Bag
