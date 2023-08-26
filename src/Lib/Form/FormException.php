@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Sannomiya\Form;
+namespace Minhnhc\Form;
 
 class FormException extends \Exception
 {
