@@ -388,7 +388,7 @@ abstract class ExcelImporter{
         }
     }
 
-    protected function doHelperImport($rs)
+    protected function doHelperImport(&$rs)
     {
         $table = $this->fm->getUpdatedTable();
         $fields = [];
@@ -472,7 +472,7 @@ abstract class ExcelImporter{
 
         $db->begin();
         $line = 2;
-        foreach ($rs as $rec) {
+        foreach ($rs as &$rec) {
             $values = $defaultValues;
             $updateValues = [];
             $set = [];

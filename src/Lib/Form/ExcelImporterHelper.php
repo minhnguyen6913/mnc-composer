@@ -8,7 +8,7 @@ class ExcelImporterHelper extends ExcelImporter {
         return true;
     }
 
-    public function doImport($rs)
+    public function doImport(&$rs)
     {
         $this->standardizeImportData($rs);
         $this->doHelperImport($rs);
