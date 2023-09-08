@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Sannomiya\Util;
+namespace Minhnhc\Util;
 
 
 class LanguagesDefault implements LanguagesInterface

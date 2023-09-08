@@ -1,6 +1,6 @@
 <?php
 
-namespace Sannomiya\Util;
+namespace Minhnhc\Util;
 
 use Exception;
 

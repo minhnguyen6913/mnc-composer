@@ -1,7 +1,7 @@
 <?php
-namespace Sannomiya\Form;
+namespace Minhnhc\Form;
 
-use Sannomiya\Database\Database;
+use Minhnhc\Database\Database;
 
 interface ListChoicesInterface
 {

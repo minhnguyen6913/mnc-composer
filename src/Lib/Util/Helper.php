@@ -1,10 +1,10 @@
 <?php
-namespace Sannomiya\Util;
+namespace Minhnhc\Util;
 use Cocur\Slugify\Slugify;
 use DateTime;
 use Exception;
-use Sannomiya\Database\Database;
-use Sannomiya\Form\Type;
+use Minhnhc\Database\Database;
+use Minhnhc\Form\Type;
 
 class Helper
 {

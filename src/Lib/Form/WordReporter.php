@@ -1,6 +1,6 @@
 <?php
 
-namespace Sannomiya\Form;
+namespace Minhnhc\Form;
 
 use DateTime;
 use PhpOffice\PhpWord\IOFactory;

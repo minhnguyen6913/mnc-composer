@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Sannomiya\Form;
+namespace Minhnhc\Form;
 
 
 abstract class Constant

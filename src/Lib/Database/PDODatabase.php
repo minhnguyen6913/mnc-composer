@@ -1,6 +1,6 @@
 <?php
 
-namespace Sannomiya\Database;
+namespace Minhnhc\Database;
 
 use App\Lib\Database\RecordSet;
 use Exception;
