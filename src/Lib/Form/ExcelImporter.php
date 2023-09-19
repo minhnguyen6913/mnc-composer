@@ -351,10 +351,10 @@ abstract class ExcelImporter{
         $line = $this->start_row + 1;
         foreach ($rs as &$rec) {
             foreach ($this->fields as $fieldName) {
-                $value = $rec[$fieldName];
+                $value = $rec[$fieldName] ?? null;
                 $field = $this->fm->getField($fieldName);
                 $type = $this->getType($fieldName);
-                if (!isset($value) || $value=='') {
+                if ($value == '') {
                     $rec[$fieldName] = null;
                 }else{
                     if (isset($field->listName) || isset($field->listValues)){
