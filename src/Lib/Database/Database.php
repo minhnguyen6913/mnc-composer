@@ -152,7 +152,7 @@ abstract class Database {
 //        $this->execute("SELECT setval('{$table}_{$serial_field}_seq'::regclass, $serial)");
 //    }
 
-    private function getRecordValues($rec, $fields): array
+    public function getRecordValues($rec, $fields): array
     {
         $ret = [];
         foreach ($fields as $field) {
