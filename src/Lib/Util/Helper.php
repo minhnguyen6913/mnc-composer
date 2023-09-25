@@ -260,7 +260,7 @@ class Helper
         if ($dat) {
             return $dat->format($toFormat);
         } else {
-            return null;
+            return $data;
         }
     }
 
