@@ -175,7 +175,7 @@ abstract class ExcelImporter{
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws FormException
      */
-    public function getImportDataOld($filepath, $csv = false): ?array
+    public function getImportData($filepath, $csv = false): ?array
     {
         if ($csv) {
             $reader = new Csv();
@@ -191,22 +191,31 @@ abstract class ExcelImporter{
 
         $ret = [];
         $c = $this->getKeyCol();
+
         while ($sh->getCell("$c$r")->getValue() != ''){
             $rec = [];
-            for ($i=0;$i<$count;$i++){
-                $value = trim($sh->getCellByColumnAndRow($i+1,$r)->getValue());
+            $col = 'A';
+            for ($i=0; $i < $count; $i++){
+                $place = $col.$r;
+                $cellVal = $sh->getCell($place)->getValue();
+
+                $col++;
+                $value = $cellVal;
+                if (!is_null($cellVal)){
+                    $value = trim($cellVal);
+                }
+
                 $type = $this->getType($this->fields[$i]);
                 $require = $this->isRequire($this->fields[$i]);
                 $caption = $this->getName($this->fields[$i]);
                 $field = $this->fm->getField($this->fields[$i]);
 
-                if ($require===true && (!isset($value) || $value==='')) {
+                if ($require === true && (!isset($value) || $value==='')) {
                     throw new FormException("[Line $r] $caption is required.");
                 }
 
                 if ($type == Type::Int || $type == Type::Number || $type == Type::Float) {
-                    if ($value!=''){
-                        //  && ( (!isset($field)) || (!isset($field->listValues) && !isset($field->listName)))
+                    if ($value != '' && !is_null($value)){
 
                         if (!is_numeric($value) && (!isset($field) || (!isset($field->listValues) && !isset($field->listName)))) {
                             throw new FormException("[Line $r] $caption must be a number. ($value)");
@@ -214,13 +223,23 @@ abstract class ExcelImporter{
                     }else{
                         $value = null;
                     }
+                }else if ($type == Type::Date || $type == Type::DateTime) {
+                    if (isset($value)) {
+                        if ($value instanceof \DateTime) {
+                            $value = $value->format('Y/m/d H:i:s');
+                        }
+                    }
+                }
+
+                // Date time convert
+                if ($value instanceof \DateTime) {
+                    $value = $value->format('Y/m/d H:i:s');
                 }
                 $rec[$this->fields[$i]] = $value;
             }
             $ret[] = $rec;
             $r++;
         }
-
         if (count($ret) == 0) {
             $lang = $this->fm->getLanguagesManager();
             throw new BusinessLogicException($lang->message('Have no data to import.' . $this->key_col));
@@ -228,7 +247,6 @@ abstract class ExcelImporter{
 
         return $ret;
     }
-
     static function alpha2num($column) {
         $number = 0;
         foreach(str_split($column) as $letter){
@@ -237,7 +255,7 @@ abstract class ExcelImporter{
         return $number;
     }
 
-    public function getImportData($filepath, $csv = false): ?array
+    public function getImportDataOld($filepath, $csv = false): ?array
     {
         if ($csv) {
             $reader = ReaderEntityFactory::createCSVReader();
