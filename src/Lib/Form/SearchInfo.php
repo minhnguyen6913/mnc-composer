@@ -5,6 +5,7 @@ namespace Minhnhc\Form;
 class SearchInfo
 {
     public array $items = [];
+    public Form $form;
     public function __construct(?array $info){
         if (!isset($info)){
             return;
