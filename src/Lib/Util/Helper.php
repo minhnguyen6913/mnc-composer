@@ -24,7 +24,7 @@ class Helper
             case Type::Date:
             case Type::Time:
             case Type::DateTime:
-                $value = $quote. $value . $quote;
+                $value = $value;
                 break;
             case Type::Boolean:
                 if ($value==1 ||  strtolower($value)=='true') {

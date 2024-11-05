@@ -3,15 +3,15 @@
 namespace Minhnhc\Form;
 
 
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Minhnhc\Util\Helper;
-use Minhnhc\Database\Database;
 use Exception;
-use Psr\Log\LoggerInterface;
+use Minhnhc\Database\Database;
+use Minhnhc\Util\Helper;
 use Minhnhc\Util\LanguagesDefault;
 use Minhnhc\Util\LanguagesInterface;
 use Minhnhc\Util\ListDataDefault;
 use Minhnhc\Util\ListDataInterface;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Psr\Log\LoggerInterface;
 
 define('ACTION_DELETE', 'delete');
 define('ACTION_UPDATE', 'update');
@@ -95,12 +95,12 @@ abstract class Form extends FormBase
     protected $queryFrom;
     protected $queryWhere;
     protected $queryOrder;
-    protected array $queryGetMaxIds = [] ;
+    protected array $queryGetMaxIds = [];
     protected $updatedTable = null;
     protected ?array $fieldOrder = null;
     protected $m_group_summarize_fields = null;
 
-    protected $m_unique_name=null;
+    protected $m_unique_name = null;
 
     protected ?bool $singleOutline = null;
     protected ?int $singleHeaderWidth = null;
@@ -140,7 +140,6 @@ abstract class Form extends FormBase
     protected $listDataManager;
 
 
-
     public function __construct($name, Database $db, ?LoggerInterface $logger)
     {
         $this->name = $name;
@@ -151,11 +150,12 @@ abstract class Form extends FormBase
         $this->listDataManager = new ListDataDefault();
     }
 
-    public function setImportKey(string $fields, $reset = false) {
+    public function setImportKey(string $fields, $reset = false)
+    {
         if ($reset) {
             $this->importKeys = [];
         }
-        if (!isset($fields) || $fields=="") {
+        if (!isset($fields) || $fields == "") {
             return;
         }
         $fieldList = explode(",", $fields);
@@ -164,14 +164,17 @@ abstract class Form extends FormBase
         }
     }
 
-    public function getImportKeys(): array {
+    public function getImportKeys(): array
+    {
         return $this->importKeys;
     }
-    public function setImportReferenceField(string $fields, $reset = false) {
+
+    public function setImportReferenceField(string $fields, $reset = false)
+    {
         if ($reset) {
             $this->importRefFields = [];
         }
-        if (!isset($fields) || $fields=="") {
+        if (!isset($fields) || $fields == "") {
             return;
         }
         $fieldList = explode(",", $fields);
@@ -180,23 +183,25 @@ abstract class Form extends FormBase
         }
     }
 
-    public function getImportReferenceFields(): array {
+    public function getImportReferenceFields(): array
+    {
         return $this->importRefFields;
     }
 
 
-    public function setUniqueField(string $fields, $reset = false) {
+    public function setUniqueField(string $fields, $reset = false)
+    {
         if ($reset) {
             $this->uniqueFields = [];
         }
 
-        if (!isset($fields) || $fields=="") {
+        if (!isset($fields) || $fields == "") {
             return;
         }
         $fieldList = explode(",", $fields);
         $keys = [];
         foreach ($fieldList as $field) {
-            $keys[]  = trim($field);
+            $keys[] = trim($field);
         }
         $this->uniqueFields[] = $keys;
     }
@@ -215,7 +220,8 @@ abstract class Form extends FormBase
         }
     }
 
-    public function getGroupForSubSummarize(){
+    public function getGroupForSubSummarize()
+    {
         return $this->m_group_summarize_fields;
     }
 
@@ -245,7 +251,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $optionDelete
      */
-    public function setOptionDelete(bool $optionDelete=true): void
+    public function setOptionDelete(bool $optionDelete = true): void
     {
         $this->optionDelete = $optionDelete;
     }
@@ -290,7 +296,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $optionImport
      */
-    public function setOptionImport(bool $optionImport=true): void
+    public function setOptionImport(bool $optionImport = true): void
     {
         $this->optionImport = $optionImport;
     }
@@ -306,7 +312,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $optionExcel
      */
-    public function setOptionExcel(bool $optionExcel=true): void
+    public function setOptionExcel(bool $optionExcel = true): void
     {
         $this->optionExcel = $optionExcel;
     }
@@ -322,7 +328,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $optionWord
      */
-    public function setOptionWord(bool $optionWord=true): void
+    public function setOptionWord(bool $optionWord = true): void
     {
         $this->optionWord = $optionWord;
     }
@@ -338,7 +344,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $optionPDF
      */
-    public function setOptionPDF(bool $optionPDF=true): void
+    public function setOptionPDF(bool $optionPDF = true): void
     {
         $this->optionPDF = $optionPDF;
     }
@@ -346,7 +352,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $optionInsert
      */
-    public function setOptionInsert(bool $optionInsert=true): void
+    public function setOptionInsert(bool $optionInsert = true): void
     {
         $this->optionInsert = $optionInsert;
         // Set copy is same as insert
@@ -356,12 +362,12 @@ abstract class Form extends FormBase
     /**
      * @param bool $value
      */
-    public function setOptionCopy(bool $value=true): void
+    public function setOptionCopy(bool $value = true): void
     {
         $this->optionCopy = $value;
     }
 
-    public function setOptionIUD(bool $value=true): void
+    public function setOptionIUD(bool $value = true): void
     {
         $this->optionInsert = $value;
         $this->optionCopy = $value;
@@ -480,7 +486,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $gridWrapHeader
      */
-    public function setGridWrapHeader(bool $gridWrapHeader=true): void
+    public function setGridWrapHeader(bool $gridWrapHeader = true): void
     {
         $this->gridWrapHeader = $gridWrapHeader;
     }
@@ -496,7 +502,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $gridHeaderFilterable
      */
-    public function setGridHeaderFilterable(bool $gridHeaderFilterable=true): void
+    public function setGridHeaderFilterable(bool $gridHeaderFilterable = true): void
     {
         $this->gridHeaderFilterable = $gridHeaderFilterable;
     }
@@ -512,7 +518,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $gridAutosize
      */
-    public function setGridAutosize(bool $gridAutosize=true): void
+    public function setGridAutosize(bool $gridAutosize = true): void
     {
         $this->gridAutosize = $gridAutosize;
     }
@@ -528,7 +534,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $gridSelection
      */
-    public function setGridSelection(bool $gridSelection=true): void
+    public function setGridSelection(bool $gridSelection = true): void
     {
         $this->gridSelection = $gridSelection;
     }
@@ -544,7 +550,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $gridView
      */
-    public function setGridView(bool $gridView=true): void
+    public function setGridView(bool $gridView = true): void
     {
         $this->gridView = $gridView;
     }
@@ -560,7 +566,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $gridHeaderResizable
      */
-    public function setGridHeaderResizable(bool $gridHeaderResizable=true): void
+    public function setGridHeaderResizable(bool $gridHeaderResizable = true): void
     {
         $this->gridHeaderResizable = $gridHeaderResizable;
     }
@@ -576,7 +582,7 @@ abstract class Form extends FormBase
     /**
      * @param bool $gridExcelColumnSelectable
      */
-    public function setGridExcelColumnSelectable(bool $gridExcelColumnSelectable=true): void
+    public function setGridExcelColumnSelectable(bool $gridExcelColumnSelectable = true): void
     {
         $this->gridExcelColumnSelectable = $gridExcelColumnSelectable;
     }
@@ -601,6 +607,7 @@ abstract class Form extends FormBase
     {
         $this->singleLabelPosition = 'horizontal';
     }
+
     public function setSingleLabelPositionVertical(): void
     {
         $this->singleLabelPosition = 'vertical';
@@ -732,7 +739,7 @@ abstract class Form extends FormBase
     {
         $ret = [];
         foreach ($this->fields as $field) {
-            if ($field->$property === $value){
+            if ($field->$property === $value) {
                 $ret[] = $field;
             }
         }
@@ -741,7 +748,7 @@ abstract class Form extends FormBase
             return $ret;
         }
 
-        return  null;
+        return null;
     }
 
     public function getSummaryFields(): ?array
@@ -750,6 +757,7 @@ abstract class Form extends FormBase
     }
 
     private int $startTime;
+
     public function action($action = null)
     {
         $this->startTime = $this->milliTime();
@@ -796,16 +804,16 @@ abstract class Form extends FormBase
                 $data = $this->insert(true);
                 break;
             case ACTION_SETTING:
-                if ($this->saveFormSetting()){
+                if ($this->saveFormSetting()) {
                     $data = "Save success.";
-                }else{
+                } else {
                     throw new FormException("Can not save user setting");
                 }
                 break;
             case ACTION_RESET_SETTING:
-                if ($this->saveFormSetting(true)){
+                if ($this->saveFormSetting(true)) {
                     $data = "Reset success.";
-                }else{
+                } else {
                     throw new FormException("Can not reset user setting");
                 }
                 break;
@@ -860,7 +868,7 @@ abstract class Form extends FormBase
             throw new FormException('File not be uploaded.');
         }
 
-        if ($file['error']!=UPLOAD_ERR_OK) {
+        if ($file['error'] != UPLOAD_ERR_OK) {
             $message = UploadException::codeToMessage($file['error'], $this->languagesManager);
             throw new FormException($message);
             // throw new UploadException($file['error']);
@@ -868,7 +876,7 @@ abstract class Form extends FormBase
 
         // Check
         $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        if ($ext!='xlsx' && $ext!='csv') {
+        if ($ext != 'xlsx' && $ext != 'csv') {
             throw new FormException(sprintf($this->languagesManager->message("File extension %s not allowed. Accept only xlsx or csv"), $ext));
         }
 
@@ -894,7 +902,8 @@ abstract class Form extends FormBase
         return "Done";
     }
 
-    protected function prepareExcel(Worksheet $sh = null) {
+    protected function prepareExcel(Worksheet $sh = null)
+    {
         if (!isset($this->excel_exporter)) {
             throw new FormException('Export excel not supported');
         }
@@ -910,7 +919,7 @@ abstract class Form extends FormBase
         $data = $this->excel_exporter->output_excel();
         $fileName = $this->excel_exporter->get_output_file_name();
         if ($fileName == 'export.xlsx') {
-            $fileNames = explode('\\', get_class($this)) ;
+            $fileNames = explode('\\', get_class($this));
             $fileName = array_pop($fileNames) . ' Export.xlsx';
         }
         return new DownloadObject($fileName, $data);
@@ -939,22 +948,22 @@ abstract class Form extends FormBase
             throw new FormException('Invalid download field');
         }
 
-        if (isset($field->imageParams)){
+        if (isset($field->imageParams)) {
             $downloadIds = explode(',', $download_id);
-            if ($thumbnail==1){
+            if ($thumbnail == 1) {
                 $file_path = $this->getThumbnailPath($field->name, $downloadIds);
-            }else {
+            } else {
                 $file_path = $this->getFilePath($field->name, $downloadIds);
             }
-        }else{
+        } else {
             // Check
             if (!is_numeric($download_id)) {
                 throw new FormException('Invalid download parameter (download id)');
             }
-            $file_name = $this->db->get("select"." $download_field from {$this->getUpdatedTable()} where id={$download_id}");
-            if ($thumbnail==1){
+            $file_name = $this->db->get("select" . " $download_field from {$this->getUpdatedTable()} where id={$download_id}");
+            if ($thumbnail == 1) {
                 $file_path = $field->getThumbnailPath($download_id, $file_name);
-            }else {
+            } else {
                 $file_path = $field->getFilePath($download_id, $file_name);
             }
         }
@@ -964,10 +973,10 @@ abstract class Form extends FormBase
         }
 
         // File name
-        if ($field->isSaveFileName() && ! isset($field->imageParams)){
-            $file_name = $this->db->get("select"." $download_field from {$this->getUpdatedTable()} where id={$download_id}");
+        if ($field->isSaveFileName() && !isset($field->imageParams)) {
+            $file_name = $this->db->get("select" . " $download_field from {$this->getUpdatedTable()} where id={$download_id}");
             $file_name = preg_replace('/^.+\//', '', $file_name);
-        }else{
+        } else {
             $file_name = 'filename';
         }
         if (!isset($file_name)) {
@@ -984,48 +993,52 @@ abstract class Form extends FormBase
         return new DownloadObject($file_name, $buf);
     }
 
-    public function getThumbnailPath($field, $downloadIds): ?string {
-        return null;
-    }
-    public function getFilePath($field, $downloadIds): ?string{
+    public function getThumbnailPath($field, $downloadIds): ?string
+    {
         return null;
     }
 
-    protected function handleUploadFiles() {
+    public function getFilePath($field, $downloadIds): ?string
+    {
+        return null;
+    }
+
+    protected function handleUploadFiles()
+    {
         /**
          * @var $field Field
          */
         $fileCaches = [];
-        foreach ($this->fields as $field){
-            if ($field->type==Type::File && !is_null($field->getSaveFileFolder())){
+        foreach ($this->fields as $field) {
+            if ($field->type == Type::File && !is_null($field->getSaveFileFolder())) {
                 // save file
-                foreach ($this->updateInfo as &$rec){
+                foreach ($this->updateInfo as &$rec) {
                     $files = $rec[$field->name];
-                    if (isset($files)){
-                        if (isset($files['error']) && $files['error']!=UPLOAD_ERR_OK) {
+                    if (isset($files)) {
+                        if (isset($files['error']) && $files['error'] != UPLOAD_ERR_OK) {
                             $this->db->rollback();
                             $message = UploadException::codeToMessage($files['error'], $this->languagesManager);
                             throw new FormException($message);
                         }
                         $id = $rec['id'];
-                        if ($files == '__delete__'){
+                        if ($files == '__delete__') {
 
                             $table = $this->getUpdatedTable();
                             $filename = $this->db->get("select $field->name from $table where id=?", [$id]);
                             $filepath = $field->getFilePath($id, $filename);
-                            if (file_exists($filepath)){
+                            if (file_exists($filepath)) {
                                 unlink($filepath);
                                 $thumbnail_filepath = $field->getThumbnailPath($id, $filename);
-                                if (file_exists($thumbnail_filepath)){
+                                if (file_exists($thumbnail_filepath)) {
                                     unlink($thumbnail_filepath);
                                 }
                             }
                             $rec[$field->name] = null;
                             if ($field->isSaveFileName()) {
-                                $this->db->execute("update"." {$this->getUpdatedTable()} set {$field->name}=null where id=?",
+                                $this->db->execute("update" . " {$this->getUpdatedTable()} set {$field->name}=null where id=?",
                                     [$rec['id']]);
                             }
-                        }else{
+                        } else {
                             $filename = $files['name'];
                             if ($field->isSaveFileFolderByMonth()) {
                                 $filename = date('Ym') . '/' . $filename;
@@ -1040,17 +1053,17 @@ abstract class Form extends FormBase
                             }
                             if (isset($fileCaches[$files['tmp_name']])) {
                                 copy($fileCaches[$files['tmp_name']], $filepath);
-                            }else{
+                            } else {
                                 move_uploaded_file($files['tmp_name'], $filepath);
                                 $fileCaches[$files['tmp_name']] = $filepath;
                             }
 
-                            if ($field->update || $field->insert){
+                            if ($field->update || $field->insert) {
 
                                 $rec[$field->name] = $filename;
                                 // Update file name to data
                                 if ($field->isSaveFileName()) {
-                                    $this->db->execute("update"." {$this->getUpdatedTable()} set {$field->name}=? where id=?",
+                                    $this->db->execute("update" . " {$this->getUpdatedTable()} set {$field->name}=? where id=?",
                                         [$filename, $rec['id']]);
                                 }
                                 // Resize image
@@ -1070,7 +1083,8 @@ abstract class Form extends FormBase
 
     private $m_importer_class;
 
-    public function setImporterClass($class){
+    public function setImporterClass($class)
+    {
         $this->m_importer_class = $class;
     }
 
@@ -1079,26 +1093,30 @@ abstract class Form extends FormBase
         return $this->m_importer_class ?? $def;
     }
 
-    public function getAllData($max = -1): array {
-        if (!$this->beforeData($data, $total, $list)){
+    public function getAllData($max = -1): array
+    {
+        if (!$this->beforeData($data, $total, $list)) {
             return $data;
         }
         $db = $this->db;
-        $query = $this->createSelectQuery();
-        return $db->getRecordSet($query, $t, 0, $max);
+        $query = $this->createSelectQuery($paramSearch);
+
+        return $db->getRecordSet($query, $t, 0, $max, $paramSearch);
     }
 
     private $list_value_map = [];
     private $reverse_list_value_map = [];
-    public function prepareListValues($data=null) {
+
+    public function prepareListValues($data = null)
+    {
         $ids = [];
         if (isset($this->listDataManager) && (!isset($data) || count($data) > 0)) {
             foreach ($this->fields as $fieldName => $field) {
-                if (isset($field->listName) && ! $field->autocomplete) {
+                if (isset($field->listName) && !$field->autocomplete) {
                     $ids[$field->listName] = [];
                     if (isset($data)) {
                         foreach ($data as $rec) {
-                            if (isset($rec[$field->name]) && !in_array($rec[$field->name], $ids[$field->listName])){
+                            if (isset($rec[$field->name]) && !in_array($rec[$field->name], $ids[$field->listName])) {
                                 $ids[$field->listName][] = $rec[$field->name];
                             }
                         }
@@ -1122,23 +1140,24 @@ abstract class Form extends FormBase
      * @param $fieldName
      * @param $value
      */
-    public function getReverseValue($fieldName, $value) {
+    public function getReverseValue($fieldName, $value)
+    {
         $value = mb_strtolower($value);
         $field = $this->getField($fieldName);
-        if (isset($field->listValues)){
-            if (!isset($this->reverse_list_value_map[$fieldName])){
+        if (isset($field->listValues)) {
+            if (!isset($this->reverse_list_value_map[$fieldName])) {
                 $this->reverse_list_value_map[$fieldName] = [];
                 foreach ($field->listValues as $rec) {
                     $this->reverse_list_value_map[$fieldName][mb_strtolower($rec[1])] = $rec[0];
                 }
             }
             return @$this->reverse_list_value_map[$fieldName][$value];
-        }elseif (isset($field->listName)){
+        } elseif (isset($field->listName)) {
             $value = mb_strtolower($value);
-            if (!isset($this->reverse_list_value_map[$fieldName])){
+            if (!isset($this->reverse_list_value_map[$fieldName])) {
                 $this->reverse_list_value_map[$fieldName] = [];
             }
-            if (!isset($this->reverse_list_value_map[$fieldName][$value])){
+            if (!isset($this->reverse_list_value_map[$fieldName][$value])) {
                 if (isset($this->listDataManager)) {
                     $this->reverse_list_value_map[$fieldName][$value] =
                         $this->listDataManager->reverse($field->listName, $value);
@@ -1159,17 +1178,17 @@ abstract class Form extends FormBase
     {
         $field = $this->getField($fieldName);
         $value = @$record[$fieldName];
-        if (isset($field->listValues)){
-            if (!isset($this->list_value_map[$fieldName])){
+        if (isset($field->listValues)) {
+            if (!isset($this->list_value_map[$fieldName])) {
                 $this->list_value_map[$fieldName] = [];
                 foreach ($field->listValues as $rec) {
                     $this->list_value_map[$fieldName][$rec[0]] = $rec[1];
                 }
             }
             return @$this->list_value_map[$fieldName][$value];
-        }elseif (isset($field->listName)){
+        } elseif (isset($field->listName)) {
             // 2021/10/04 add || count($this->list_value_map[$fieldName]) == 0 so it cant get data witch have ids
-            if (!isset($this->list_value_map[$fieldName]) || count($this->list_value_map[$fieldName]) == 0){
+            if (!isset($this->list_value_map[$fieldName]) || count($this->list_value_map[$fieldName]) == 0) {
                 $this->list_value_map[$fieldName] = [];
                 if (isset($this->listDataManager)) {
                     $list = $this->listDataManager->list($field->listName, null, $field->listFixParam);
@@ -1192,18 +1211,18 @@ abstract class Form extends FormBase
                 }
             }
 
-            if ($field->choices){
+            if ($field->choices) {
                 $func = $field->getChoicesInterface();
                 if (isset($func)) {
                     $query = $func->getDataQuery($record);
-                }else{
+                } else {
                     $query = $field->getChoicesQueryData();
                     if (isset($query)) {
                         $query = $this->format($query, $record);
                     }
                 }
                 if (isset($query)) {
-                    if (!isset($this->list_value_map[$fieldName][$query])){
+                    if (!isset($this->list_value_map[$fieldName][$query])) {
                         $temp = [];
                         $l = $this->db->getList($query);
                         foreach ($l as $v) {
@@ -1221,13 +1240,15 @@ abstract class Form extends FormBase
         return $value;
     }
 
-    protected function milliTime(): int {
+    protected function milliTime(): int
+    {
         return round(microtime(true) * 1000);
     }
 
-    protected function treeToList($rs): array {
+    protected function treeToList($rs): array
+    {
         $ret = [];
-        foreach ($rs as $rec){
+        foreach ($rs as $rec) {
             $ret[] = $rec;
             if (isset($rec['items']) && is_array($rec['items'])) {
                 $children = $this->treeToList($rec['items']);
@@ -1236,7 +1257,7 @@ abstract class Form extends FormBase
                 }
             }
         }
-        return  $ret;
+        return $ret;
     }
 
     public function data(): array
@@ -1261,21 +1282,21 @@ abstract class Form extends FormBase
             }
         }
 
-        if (!$this->beforeData($data, $total, $list)){
+        if (!$this->beforeData($data, $total, $list)) {
             list($map, $list, $listTime) = $this->prepareListBoxTextValue($data);
             $this->updateListBoxTextValue($map, $data);
             $this->afterData($data, $t, $summary, $list, $extra);
-            return ['data' => $data, 'total' => $total, 'summary' => $summary, 'list' => $list, 'extra'=>$extra];
+            return ['data' => $data, 'total' => $total, 'summary' => $summary, 'list' => $list, 'extra' => $extra];
         }
+
         $timeBeforeData = $this->milliTime();
 
 
-        $dataQuery = $this->createSelectQuery();
+        $dataQuery = $this->createSelectQuery($paramSearch);
         // Check
-
         try {
 
-            $data = $db->getRecordSet($dataQuery, $t, ($this->pageIndex - 1) * $this->pageSize, $this->pageSize);
+            $data = $db->getRecordSet($dataQuery, $t, ($this->pageIndex - 1) * $this->pageSize, $this->pageSize, $paramSearch);
             if ($this->getLimit() > 0) {
 //                $total = $db->getTotal($dataQuery);
 //                if ($total > $this->getLimit()) {
@@ -1301,7 +1322,7 @@ abstract class Form extends FormBase
                 foreach ($data as &$recRef) {
                     if (isset($recRef[$fieldName]) && $recRef[$fieldName] >= 1) {
                         $recRef[$fieldName] = true;
-                    }else{
+                    } else {
                         $recRef[$fieldName] = false;
                     }
 
@@ -1330,7 +1351,7 @@ abstract class Form extends FormBase
                     $func = $field->getChoicesInterface();
                     if (isset($func)) {
                         $query = $func->getDataQuery($rec);
-                    }else{
+                    } else {
                         $query = $field->getChoicesQueryData();
                         if (isset($query)) {
                             $query = $this->format($query, $rec);
@@ -1351,7 +1372,7 @@ abstract class Form extends FormBase
                 // Get list
                 $params = [];
                 foreach ($data as &$rec) {
-                    if (isset($rec[$fieldName])){
+                    if (isset($rec[$fieldName])) {
                         $params[] = $rec[$fieldName];
                     }
                 }
@@ -1360,8 +1381,8 @@ abstract class Form extends FormBase
                     $map = $this->getAutocompleteData($field, $params);
                     foreach ($data as &$rec) {
                         $id = $rec[$fieldName];
-                        if (isset($map[$id])){
-                            $rec[$fieldName]=$map[$id];
+                        if (isset($map[$id])) {
+                            $rec[$fieldName] = $map[$id];
                         }
                     }
                 }
@@ -1371,12 +1392,12 @@ abstract class Form extends FormBase
 
         // Get summary
         $summary = null;
-        $query = $this->createSummaryQuery();
-        if (isset($query)){
-            $summary = $this->db->getRecord($query);
-            if (isset($summary)){
+        $query = $this->createSummaryQuery($paramSearch);
+        if (isset($query)) {
+            $summary = $this->db->getRecord($query, $paramSearch);
+            if (isset($summary)) {
                 foreach ($summary as $field => $value) {
-                    $summary[$field] = (double) $value;
+                    $summary[$field] = (double)$value;
                 }
             }
         }
@@ -1388,28 +1409,28 @@ abstract class Form extends FormBase
             foreach ($this->fields as $fieldName => $field) {
                 if ($field->type == Type::Double || $field->type == Type::Float || $field->type == Type::Number) {
                     if (isset($rec[$fieldName]) && is_numeric($rec[$fieldName])) {
-                        $rec[$fieldName] = (double) $rec[$fieldName];
+                        $rec[$fieldName] = (double)$rec[$fieldName];
                     }
-                }elseif ($field->type == Type::Int) {
+                } elseif ($field->type == Type::Int) {
                     if (isset($rec[$fieldName]) && is_numeric($rec[$fieldName])) {
-                        $rec[$fieldName] = (int) $rec[$fieldName];
+                        $rec[$fieldName] = (int)$rec[$fieldName];
                     }
                 }
             }
         }
 
         $extra = [
-            'debug'=> [
+            'debug' => [
                 'query' => $dataQuery,
                 'time' => [
                     '1all' => $this->milliTime() - $this->startTime,
                     '2init' => $timeInit - $timeStart,
                     '3beforeData' => $timeBeforeData - $timeInit,
-                    '4query' => ($timeQuery-$timeBeforeData),
-                    '5adjust' => ($timeAdjust-$timeQuery),
-                    '6list' => ($timeList-$timeAdjust) ,
-                    '7choices' => ($timeChoices-$timeList),
-                    '8summary' => ($timeSummary-$timeChoices),
+                    '4query' => ($timeQuery - $timeBeforeData),
+                    '5adjust' => ($timeAdjust - $timeQuery),
+                    '6list' => ($timeList - $timeAdjust),
+                    '7choices' => ($timeChoices - $timeList),
+                    '8summary' => ($timeSummary - $timeChoices),
                     'listTime' => $listTime,
                 ]
             ]
@@ -1417,7 +1438,7 @@ abstract class Form extends FormBase
 
         $this->afterData($data, $t, $summary, $list, $extra);
 
-        return ['data' => $data, 'total' => $t, 'list' => $list, 'summary'=> $summary, 'extra' => $extra];
+        return ['data' => $data, 'total' => $t, 'list' => $list, 'summary' => $summary, 'extra' => $extra];
     }
 
     private function prepareListBoxTextValue($data): array
@@ -1430,7 +1451,7 @@ abstract class Form extends FormBase
                 /**
                  * @var $field Field
                  */
-                if (isset($field->listName) && ! $field->autocomplete) {
+                if (isset($field->listName) && !$field->autocomplete) {
                     // If data < 1000, should be optimize list
                     // 2021/09/22 comment out because angular does not update text after update
 //                    if (isset($field->listTextField) && (!isset($field->tree) || !$field->tree)) {
@@ -1450,36 +1471,36 @@ abstract class Form extends FormBase
                     // if (count($data) < 1000) {
                     $ids[$field->listName] = [];
                     foreach ($data as $rec) {
-                        if (isset($rec[$field->name])){
+                        if (isset($rec[$field->name])) {
                             $ids[$field->listName][] = $rec[$field->name];
                         }
                     }
                     // }
                     $params = $this->getListParamValues($field);
                     $tmpStart = $this->milliTime();
-                    if (isset($ids[$field->listName])){
+                    if (isset($ids[$field->listName])) {
                         $this->listDataManager->setIDs($ids[$field->listName]);
                     }
                     $map[$fieldName] = $this->listDataManager->map($field->listName, $params, $field->listFixParam);
                     $listTime['count'] += count($map[$fieldName]);
                     $listTime[$field->listName] = $this->milliTime() - $tmpStart;
-                    if ($field->choices){
+                    if ($field->choices) {
                         $list[$field->listName] = [];
-                        foreach ($map[$fieldName] as $value=>$text) {
+                        foreach ($map[$fieldName] as $value => $text) {
                             if ($field->listStringValue) {
                                 // PHP auto convert array key to int show must handle here
-                                $value = (string) $value;
+                                $value = (string)$value;
                             }
                             $list[$field->listName][] = ['text' => $text, 'value' => $value];
                         }
-                    }elseif ($field->tree){
+                    } elseif ($field->tree) {
                         $list[$field->listName] = $this->listDataManager->list($field->listName, $params, $field->listFixParam);
-                        $list[$field->listName . '_tree'] = $this->treeToList($list[$field->listName] );
+                        $list[$field->listName . '_tree'] = $this->treeToList($list[$field->listName]);
                     }
 
-                }elseif (isset($field->listValues)) {
+                } elseif (isset($field->listValues)) {
                     $m = [];
-                    foreach ($field->listValues as $rec){
+                    foreach ($field->listValues as $rec) {
                         $m[$rec[0]] = $rec[1];
                     }
                     $map[$fieldName] = $m;
@@ -1491,7 +1512,9 @@ abstract class Form extends FormBase
     }
 
     private array $nonDefaultMap = [];
-    private function updateListBoxTextValue($map, &$data) {
+
+    private function updateListBoxTextValue($map, &$data)
+    {
         if (count($map) > 0) {
             // throw  new FormException(json_encode($map));
             foreach ($data as &$recRef) {
@@ -1499,14 +1522,14 @@ abstract class Form extends FormBase
                     if ($this->getField($fieldName)->choices) {
                         continue;
                     }
-                    if (isset($recRef[$fieldName])){
+                    if (isset($recRef[$fieldName])) {
                         $value = $recRef[$fieldName];
 
                         if (!isset($m[$value])) {
                             // Not in default, must to get new list
                             $field = $this->getField($fieldName);
                             $params = $this->getListParamValues($field, $recRef);
-                            $mapKey = $fieldName. json_encode($params);
+                            $mapKey = $fieldName . json_encode($params);
                             if (!isset($this->nonDefaultMap[$mapKey])) {
                                 $this->nonDefaultMap[$mapKey] = $this->listDataManager->map($field->listName, $params, $field->listFixParam);
                             }
@@ -1514,7 +1537,7 @@ abstract class Form extends FormBase
                         }
 
                         $text = $m[$value];
-                        $recRef["@{$fieldName}"] = ['value'=> $value, 'text' => $text];
+                        $recRef["@{$fieldName}"] = ['value' => $value, 'text' => $text];
                     }
                 }
             }
@@ -1538,22 +1561,23 @@ abstract class Form extends FormBase
             $ret = [];
             foreach ($params as $param) {
                 $paramField = $this->getField($param);
-                if (isset($rec)){
+                if (isset($rec)) {
                     $ret[] = @$rec[$paramField->name];
-                }else{
+                } else {
                     $ret[] = $paramField->getDefaultValue();
                 }
             }
             return $ret;
-        }else{
+        } else {
             $paramField = $this->getField($params);
-            if (isset($rec)){
+            if (isset($rec)) {
                 return @$rec[$paramField->name];
-            }else{
+            } else {
                 return $paramField->getDefaultValue();
             }
         }
     }
+
     /**
      * @param $field
      * @param $params
@@ -1564,11 +1588,11 @@ abstract class Form extends FormBase
         $o = $field->getAutocompleteInterface();
         if (isset($o)) {
             return $o->getData($this->db, $params);
-        }else{
+        } else {
             $autocomplete = $field->getAutocompleteData();
             if (is_callable($autocomplete)) {
                 return $autocomplete($this->db, $params);
-            }else{
+            } else {
                 $query = str_replace(Constant::QueryParamParam, implode(',', $params), $autocomplete);
                 return $this->db->getMap($query);
             }
@@ -1603,39 +1627,42 @@ abstract class Form extends FormBase
                 $this->initDataParam();
                 $this->initUpdateParam();
         }
-        if ($this->action == ACTION_COPY || $this->action==ACTION_BULK_COPY) {
+        if ($this->action == ACTION_COPY || $this->action == ACTION_BULK_COPY) {
             $this->initCopyId();
         }
 
         $this->afterInit();
     }
 
-    protected function initExcelParam(){
+    protected function initExcelParam()
+    {
         if (isset($_REQUEST['excelFields']) && $_REQUEST['excelFields'] != '') {
             $this->excelFields = json_decode($_REQUEST['excelFields'], true);
             if (!isset($this->excelFields)) {
-                $this->excelFields = explode(",",$_REQUEST['excelFields']);
+                $this->excelFields = explode(",", $_REQUEST['excelFields']);
             }
         }
-        if (isset($_REQUEST['orderFields'])  && $_REQUEST['orderFields'] != '' ) {
+        if (isset($_REQUEST['orderFields']) && $_REQUEST['orderFields'] != '') {
             $this->orderFields = json_decode($_REQUEST['orderFields'], true);
             if (!isset($this->orderFields)) {
-                $this->orderFields = explode(",",$_REQUEST['orderFields']);
+                $this->orderFields = explode(",", $_REQUEST['orderFields']);
             }
         }
     }
 
-    protected function initCopyId() {
+    protected function initCopyId()
+    {
         $keyFields = $this->getFieldsByProperty('key', true);
         foreach ($this->updateInfo as &$rec) {
-            foreach ($keyFields as $field){
+            foreach ($keyFields as $field) {
                 $key = $field->name;
                 $rec["copy_{$key}"] = $rec[$key];
             }
         }
     }
 
-    public function getCopyId($rec, $key = 'id') {
+    public function getCopyId($rec, $key = 'id')
+    {
         return @$rec["copy_{$key}"];
     }
 
@@ -1644,7 +1671,7 @@ abstract class Form extends FormBase
         $files = @$rec[$fieldName];
         if (isset($files)) {
             return new FileInfo($files['name'], $files['type'], $files['tmp_name'], $files['size'], $files['error']);
-        }else{
+        } else {
             return null;
         }
     }
@@ -1662,7 +1689,7 @@ abstract class Form extends FormBase
                 }
                 if (isset($field->listTextField)) {
                     $sort = $sort . $field->listTextField;
-                }else{
+                } else {
                     $sort = $sort . $field->getDatabaseField();
                 }
 
@@ -1679,9 +1706,10 @@ abstract class Form extends FormBase
         return $sort;
     }
 
-    protected function createSelectQueryWherePart(): ?string
+    protected function createSelectQueryWherePart(&$paramSearch = []): ?string
     {
         $where = null;
+        $paramSearch = [];// reset
         if (isset($this->searchInfo)) {
             //throw new FormException(json_encode($this->searchInfo));
             $where = '';
@@ -1694,7 +1722,13 @@ abstract class Form extends FormBase
                 if (!$field->searchable) {
                     continue;
                 }
-                $expression = $this->createSearchExpression($fieldName);
+                $this->createSearchExpression($fieldName, null, $expression, $param);
+                if ($param) {
+                    foreach ($param as $paramItem) {
+                        $paramSearch[] = $paramItem;
+                    }
+                }
+
                 if (isset($expression)) {
                     if ($where != '') {
                         $where .= ' AND ';
@@ -1704,8 +1738,9 @@ abstract class Form extends FormBase
             }
         }
 
+
         if (isset($this->queryWhere)) {
-            if (isset($where) && $where !='') {
+            if (isset($where) && $where != '') {
                 $where = "({$this->queryWhere}) AND $where";
             } else {
                 $where = $this->queryWhere;
@@ -1715,13 +1750,14 @@ abstract class Form extends FormBase
         return $where;
     }
 
-    public function createSelectQuery(): ?string
+    public function createSelectQuery(&$paramSearch = []): ?string
     {
+        $paramSearch = [];
         $query = sprintf('select %s from %s', $this->querySelect, $this->queryFrom);
 
         // Sort
         $sort = $this->createSelectQueryOrderPart();
-        $where = $this->createSelectQueryWherePart();
+        $where = $this->createSelectQueryWherePart($paramSearch);
 
         if (isset($where) && $where != '') {
             $query = $query . "\nWHERE $where";
@@ -1734,8 +1770,9 @@ abstract class Form extends FormBase
         return $query;
     }
 
-    protected function createSummaryQuery(): ?string
+    protected function createSummaryQuery(&$paramSearch = []): ?string
     {
+        $paramSearch = [];
         $fields = $this->getSummaryFields();
         if (!isset($fields)) {
             return null;
@@ -1743,22 +1780,24 @@ abstract class Form extends FormBase
 
         // Create summary query
         $select = '';
-        foreach ($fields as $field){
-            if ($select!=''){
+        foreach ($fields as $field) {
+            if ($select != '') {
                 $select .= ',';
             }
             $select .= "SUM({$field->name}) AS {$field->name}";
         }
         $query = sprintf('select %s from %s', $select, $this->queryFrom);
-        $where = $this->createSelectQueryWherePart();
+        $where = $this->createSelectQueryWherePart($paramSearch);
         if (isset($where) && $where != '') {
             $query = $query . "\nWHERE $where";
         }
         return $query;
     }
 
-    public function createSearchExpression(string $fieldName, $col = null)
+    public function createSearchExpression(string $fieldName, $col = null, &$expression = null, &$param = [])
     {
+        $expression = null;
+        $param = [];
         if (!isset($this->searchInfo)) {
             return null;
         }
@@ -1776,7 +1815,7 @@ abstract class Form extends FormBase
             $col = $field->getDatabaseField();
         }
 
-        if ($field->autocomplete){
+        if ($field->autocomplete) {
             $value = trim(@$searchInfo['value1']); // Helper::queryEncode(@$searchInfo['value1'], $field->type);
 
             // Search null
@@ -1784,64 +1823,73 @@ abstract class Form extends FormBase
                 $value = null;
                 if ($searchType == Constant::SearchTypeIsNull) {
                     $searchType = Constant::SearchTypeEqual;
-                }else{
+                } else {
                     $searchType = Constant::SearchTypeNotEqual;
                 }
             }
 
-            if (!isset($value) || $value==''){
+            if (!isset($value) || $value == '') {
                 switch ($searchType) {
                     case Constant::SearchTypeStartWith:
                     case Constant::SearchTypeEndWith:
                     case Constant::SearchTypeContains:
                     case Constant::SearchTypeEqual:
-                        return "$col is null";
+                        $expression = "$col is null";
+                        return;
                     case Constant::SearchTypeNotEqual:
                     case Constant::SearchTypeNotContains:
-                        return "$col is not null";
+                        $expression = "$col is not null";
+                        return;
                 }
-            }else{
+            } else {
                 switch ($searchType) {
                     case Constant::SearchTypeStartWith:
+
                         $value = $value . '%';
                         break;
                     case Constant::SearchTypeEndWith:
-                        $value = '%'. $value;
+                        $value = '%' . $value;
                         break;
                     case Constant::SearchTypeContains:
-                        $value = '%'. $value . '%';
+                        $value = '%' . $value . '%';
                         break;
 
                 }
                 $listId = $this->getAutocompleteSearch($field, $value);
 
-                if (isset($listId)){
-                    if (is_array($listId)){
-                        if (count($listId) == 0){
+                if (isset($listId)) {
+                    if (is_array($listId)) {
+                        if (count($listId) == 0) {
                             return false;
-                        }else{
+                        } else {
                             $listId = implode(",", $listId);
-                            if ($searchType == Constant::SearchTypeNotEqual){
-                                return "$col not in ($listId)";
-                            }else{
-                                return "$col in ($listId)";
+                            if ($searchType == Constant::SearchTypeNotEqual) {
+                                $expression = "$col not in ($listId)";
+                                return;
+                            } else {
+                                $expression = "$col in ($listId)";
+                                return;
                             }
                         }
-                    }else{
-                        if ($searchType == Constant::SearchTypeNotEqual){
-                            return "$col <> $listId";
-                        }else{
-                            return "$col = $listId";
+                    } else {
+                        if ($searchType == Constant::SearchTypeNotEqual) {
+                            $expression = "$col <> $listId";
+                            return;
+                        } else {
+                            $expression = "$col = $listId";
+                            return;
                         }
                     }
-                }else{
-                    return "LOWER($col) like '$value'";
+                } else {
+                    $param[] = $value;
+                    $expression = "LOWER($col) like ?";
+                    return;
                 }
             }
             return null;
         }
 
-        if ($field->choices){
+        if ($field->choices) {
 
 
             $values = $searchInfo['values'];
@@ -1851,13 +1899,13 @@ abstract class Form extends FormBase
                 $values = null;
                 if ($searchType == Constant::SearchTypeIsNull) {
                     $searchType = Constant::SearchTypeIn;
-                }else{
+                } else {
                     $searchType = Constant::SearchTypeNotIn;
                 }
-            }else{
+            } else {
                 if (!is_array($values) || count($values) <= 0) {
                     $values = null;
-                }else{
+                } else {
                     $values = implode(',', $values);
                 }
             }
@@ -1865,144 +1913,165 @@ abstract class Form extends FormBase
             $func = $field->getChoicesInterface();
             if (isset($func)) {
                 return $func->getSearchQueryCondition($searchType != Constant::SearchTypeIn, $values);
-            }else{
+            } else {
                 $query = $field->getChoicesQuerySearch();
-                if (is_callable($query)){
+                if (is_callable($query)) {
                     return $query($searchType != Constant::SearchTypeIn, $values);
-                }elseif (isset($query)){
+                } elseif (isset($query)) {
                     $in = 'in';
-                    if (isset($values)){
+                    if (isset($values)) {
                         $condition = "in ($values)";
-                        if ($searchType != Constant::SearchTypeIn){
+                        if ($searchType != Constant::SearchTypeIn) {
                             $in = 'not in';
                         }
-                    }else{
-                        if ($searchType == Constant::SearchTypeIn){
+                    } else {
+                        if ($searchType == Constant::SearchTypeIn) {
                             $in = 'not in';
                         }
                         $condition = "is not null";
                     }
                     $query = str_replace(Constant::QueryParamCondition, $condition, $query);
-                    return str_replace(Constant::QueryParamIn, $in, $query);
+                    $expression = str_replace(Constant::QueryParamIn, $in, $query);
+                    return;
                 }
             }
             return null;
         }
 
-        $where = null;
         switch ($searchType) {
             case Constant::SearchTypeIsNull:
-                $where = "$col is null";
+                $expression = "$col is null";
+                return;
                 break;
             case Constant::SearchTypeIsNotNull:
-                $where = "$col is not null";
+                $expression = "$col is not null";
+                return;
                 break;
             case Constant::SearchTypeEqual:
                 $value = Helper::queryEncode(trim(@$searchInfo['value1']), $field->type);
                 if ($value == 'null') {
-                    $where = "$col is null";
+                    $expression = "$col is null";
+
                 } else {
-                    $where = "$col = $value";
+                    $param[] = $value;
+                    $expression = "$col = ?";
                 }
+                return;
                 break;
             case Constant::SearchTypeNotEqual:
                 $value = Helper::queryEncode(trim(@$searchInfo['value1']), $field->type);
                 if ($value == 'null') {
-                    $where = "$col is not null";
+                    $expression = "$col is not null";
                 } else {
-                    $where = "$col <> $value";
+                    $param[] = $value;
+                    $expression = "$col <> ?";
                 }
+                return;
                 break;
             case Constant::SearchTypeContains:
                 $value = Helper::queryEncode(trim(@$searchInfo['value1']), $field->type, '', '');
                 $value = mb_strtolower($value);
-                $where = "LOWER($col) like '%$value%'";
+                $param[] = "%{$value}%";
+                $expression = "LOWER($col) like ?";
                 break;
             case Constant::SearchTypeNotContains:
                 $value = Helper::queryEncode(trim(@$searchInfo['value1']), $field->type, '', '');
                 $value = mb_strtolower($value);
-                $where = "LOWER($col) not like '%$value%'";
+                $param[] = "%{$value}%";
+                $expression = "LOWER($col) not like ?";
                 break;
             case Constant::SearchTypeEndWith:
                 $value = Helper::queryEncode(trim(@$searchInfo['value1']), $field->type, '', '');
                 $value = mb_strtolower($value);
-                $where = "LOWER($col) like '%$value'";
+                $param[] = "%{$value}";
+                $expression = "LOWER($col) like ?";
                 break;
             case Constant::SearchTypeStartWith:
                 $value = Helper::queryEncode(trim(@$searchInfo['value1']), $field->type, '', '');
                 $value = mb_strtolower($value);
-                $where = "LOWER($col) like '$value%'";
+                $param[] = "{$value}%";
+                $expression = "LOWER($col) like ?";
                 break;
             case Constant::SearchTypeIn:
                 $value1 = Helper::queryEncode(@$searchInfo['value1'], $field->type, null);
                 $value2 = Helper::queryEncode(@$searchInfo['value2'], $field->type, null);
                 $values = @$searchInfo['values'];
+
                 if (is_array($values) && !isset($value1) && !isset($value2)) {
                     if (count($values) > 0) {
                         $newValues = [];
                         foreach ($values as $id) {
-                            if (!is_numeric($id) || $field->listStringValue || ($field->type!=Type::Int && $field->type!=Type::Float && $field->type!=Type::Number)) {
-                                $newValues[] = "'$id'";
-                            }else{
-                                $newValues[] = $id;
-                            }
-
+//                            if (!is_numeric($id) || $field->listStringValue || ($field->type!=Type::Int && $field->type!=Type::Float && $field->type!=Type::Number)) {
+//                                $newValues[] = "'$id'";
+//                            }else{
+//
+//                            }
+                            $param[] = $id;
+                            $newValues[] = '?';
                         }
                         $values = $newValues;
                         $values = implode(',', $values);
-                        $where = "$col in ($values)";
+                        $expression = "$col in ($values)";
                     } else {
-                        $where = "$col is null";
+                        $expression = "$col is null";
                     }
                 } else {
                     if (!isset($value1) && !isset($value2)) {
-                        $where = "$col is null";
+                        $expression = "$col is null";
                     } elseif (isset($value1) && isset($value2)) {
-                        $where = "($col >= $value1 AND $col <= $value2)";
+                        $param[] = $value1;
+                        $param[] = $value2;
+                        $expression = "($col between ? AND ?)";
                     } elseif (isset($value1)) {
-                        $where = "$col >= $value1";
+                        $param[] = $value1;
+                        $expression = "$col >= ?";
                     } else {
-                        $where = "$col <= $value2";
+                        $param[] = $value2;
+                        $expression = "$col <= ?";
                     }
                 }
                 break;
             case Constant::SearchTypeNotIn:
                 $value1 = Helper::queryEncode(@$searchInfo['value1'], $field->type, null);
                 $value2 = Helper::queryEncode(@$searchInfo['value2'], $field->type, null);
+
                 $values = @$searchInfo['values'];
                 if (is_array($values) && !isset($value1) && !isset($value2)) {
                     if (count($values) > 0) {
                         $newValues = [];
                         foreach ($values as $id) {
-                            if (!is_numeric($id) || $field->listStringValue  || ($field->type!=Type::Int && $field->type!=Type::Float && $field->type!=Type::Number)) {
-                                $newValues[] = "'$id'";
-                            }else{
-                                $newValues[] = $id;
-                            }
-
+//                            if (!is_numeric($id) || $field->listStringValue  || ($field->type!=Type::Int && $field->type!=Type::Float && $field->type!=Type::Number)) {
+//                                $newValues[] = "'$id'";
+//                            }else{
+//                                $newValues[] = $id;
+//                            }
+                            $param[] = $id;
+                            $newValues[] = '?';
                         }
                         $values = $newValues;
                         $values = implode(',', $values);
-                        $where = "$col not in ($values)";
+                        $expression = "$col not in ($values)";
                     } else {
-                        $where = "$col is not null";
+                        $expression = "$col is not null";
                     }
                 } else {
                     if (!isset($value1) && !isset($value2)) {
-                        $where = "$col is not null";
+                        $expression = "$col is not null";
                     } elseif (isset($value1) && isset($value2)) {
-                        $where = "($col < $value1 OR $col > $value2)";
+                        $param[] = $value1;
+                        $param[] = $value2;
+                        $expression = "($col < ? OR $col > ?)";
                     } elseif (isset($value1)) {
-                        $where = "$col < $value1";
+                        $param[] = $value1;
+                        $expression = "$col < ?";
                     } else {
-                        $where = "$col > $value2";
+                        $param[] = $value2;
+                        $expression = "$col > $value2";
                     }
                 }
 
                 break;
         }
-
-        return $where;
     }
 
     public static function format(?string $string, array $record)
@@ -2027,10 +2096,10 @@ abstract class Form extends FormBase
 
         // Cancel update
         if (!$this->beforeDelete($this->updateInfo, $message)) {
-            if (isset($message)){
+            if (isset($message)) {
                 // Having error
                 throw new FormException($message);
-            }else{
+            } else {
                 // Just skip update
                 return $this->updateInfo;
             }
@@ -2091,11 +2160,11 @@ abstract class Form extends FormBase
             if ($field->choices) {
                 $func = $field->getChoicesInterface();
                 if (isset($func)) {
-                    $query= $func->getDeleteQuery($rec);
+                    $query = $func->getDeleteQuery($rec);
                     if (isset($query)) {
                         $ret[] = $query;
                     }
-                }else{
+                } else {
                     $query = $field->getChoicesQueryDelete();
                     if (isset($query)) {
                         $query = $this->format($query, $rec);
@@ -2140,20 +2209,21 @@ abstract class Form extends FormBase
 
             if ($forUpdate) {
                 $where .= "{$field->name}=$value";
-            }else{
+            } else {
                 $where .= "{$field->getDatabaseField()}=$value";
             }
 
         }
     }
 
-    private function prepareUpdate(){
+    private function prepareUpdate()
+    {
         // Adjust autocomplete data
         /**
          * @var Field $field
          */
         foreach ($this->fields as $field) {
-            if ($field->autocomplete){
+            if ($field->autocomplete) {
                 if (!is_null($field->getAutocompleteInterface())
                     || (!is_null($field->getAutocompleteInsert()) && !is_null($field->getAutocompleteSearch()))) {
                     foreach ($this->updateInfo as &$rec) {
@@ -2165,17 +2235,18 @@ abstract class Form extends FormBase
         }
     }
 
-    private function getAutocompleteSearch(Field $field, $value, $partialMatch=true): ?array{
+    private function getAutocompleteSearch(Field $field, $value, $partialMatch = true): ?array
+    {
         $o = $field->getAutocompleteInterface();
         $listId = null;
         if (isset($o)) {
             $listId = $o->search($this->db, $value, $partialMatch);
-        }else{
+        } else {
             $search = $field->getAutocompleteSearch();
             if (isset($search)) {
                 if (is_callable($search)) {
                     $listId = $search($this->db, $value);
-                }else{
+                } else {
                     $querySearch = str_replace(Constant::QueryParamParam, Helper::queryEncode($value), $search);
                     $listId = $this->db->getList($querySearch);
                 }
@@ -2189,12 +2260,12 @@ abstract class Form extends FormBase
         $listId = $this->getAutocompleteSearch($field, $value, false);
         if (isset($listId) && count($listId) > 0) {
             $id = $listId[0];
-        }else{
+        } else {
             $id = null;
         }
-        if (isset($id)){
+        if (isset($id)) {
             return $id;
-        }else{
+        } else {
             // Dont need to insert null value
             if (!isset($value)) {
                 return null;
@@ -2202,11 +2273,11 @@ abstract class Form extends FormBase
             $o = $field->getAutocompleteInterface();
             if (isset($o)) {
                 return $o->insert($this->db, $value);
-            }else{
+            } else {
                 $insert = $field->getAutocompleteInsert();
                 if (is_callable($insert)) {
                     return $insert($this->db, $value);
-                }else{
+                } else {
                     $queryInsert = str_replace(Constant::QueryParamParam, Helper::queryEncode($value), $insert);
                     $this->db->execute($queryInsert);
                     return $this->db->insertedId();
@@ -2216,7 +2287,8 @@ abstract class Form extends FormBase
         }
     }
 
-    public function getKeyFields(){
+    public function getKeyFields()
+    {
         $ret = [];
         /**
          * @var $field Field
@@ -2228,6 +2300,7 @@ abstract class Form extends FormBase
         }
         return $ret;
     }
+
     public function insert($bulkUpdate = false)
     {
         $this->init();
@@ -2241,10 +2314,10 @@ abstract class Form extends FormBase
 
         // Cancel update
         if (!$this->beforeUpdate($this->updateInfo, $message)) {
-            if (isset($message)){
+            if (isset($message)) {
                 // Having error
                 throw new FormException($message);
-            }else{
+            } else {
                 // Just skip update
                 return $this->updateInfo;
             }
@@ -2297,17 +2370,19 @@ abstract class Form extends FormBase
         $this->db->commit();
 
         // List box value
-        list($map, , ) = $this->prepareListBoxTextValue($this->updateInfo);
+        list($map, ,) = $this->prepareListBoxTextValue($this->updateInfo);
         $this->updateListBoxTextValue($map, $this->updateInfo);
         $this->afterUpdate($this->updateInfo);
         return $this->updateInfo;
     }
 
-    protected function checkUnique(array $rs, string $table, $checkFields, ?string &$errorValues, $where = null, $keyFields='id'): bool {
+    protected function checkUnique(array $rs, string $table, $checkFields, ?string &$errorValues, $where = null, $keyFields = 'id'): bool
+    {
         return $this->db->checkUnique($rs, $table, $checkFields, $errorValues, $where, $keyFields, $this->isActionUpdate());
     }
 
-    public function checkUniques(array $rs, &$message, $table = null, $isImport = false): bool {
+    public function checkUniques(array $rs, &$message, $table = null, $isImport = false): bool
+    {
         if (!isset($table)) {
             $table = $this->getUpdatedTable();
         }
@@ -2340,22 +2415,24 @@ abstract class Form extends FormBase
         return true;
     }
 
-    private function setBulkUpdate() {
+    private function setBulkUpdate()
+    {
         // Last is set data
         $updateData = array_pop($this->updateInfo);
 
         // Update that set
         foreach ($this->updateInfo as &$recRef) {
-            foreach ($updateData as $key=>$value) {
+            foreach ($updateData as $key => $value) {
 //                if (str_starts_with($key, 'copy_')) {
 //                    continue;
 //                }
                 if (isset($value) && $key != SERIAL_PARAM_NAME) {
-                    $recRef[$key]=$value;
+                    $recRef[$key] = $value;
                 }
             }
         }
     }
+
     public function update($bulkUpdate = false)
     {
 
@@ -2373,10 +2450,10 @@ abstract class Form extends FormBase
 
         // Cancel update
         if (!$this->beforeUpdate($this->updateInfo, $message)) {
-            if (isset($message)){
+            if (isset($message)) {
                 // Having error
                 throw new FormException($message);
-            }else{
+            } else {
                 // Just skip update
                 return $this->updateInfo;
             }
@@ -2418,7 +2495,7 @@ abstract class Form extends FormBase
         // Return value for auto complete
         foreach ($this->updateInfo as &$rec) {
             foreach ($this->fields as $field) {
-                if ($field->autocomplete){
+                if ($field->autocomplete) {
                     if (isset($rec[$field->name . '_autocomplete_backup_'])) {
                         $rec[$field->name] = $rec[$field->name . '_autocomplete_backup_'];
                         unset($rec[$field->name . '_autocomplete_backup_']);
@@ -2433,6 +2510,7 @@ abstract class Form extends FormBase
     {
         return $this->action == ACTION_DEFINE || $this->action == ACTION_DEFINE_WITH_DATA;
     }
+
     protected function isActionData(): bool
     {
         return $this->action == ACTION_DATA || $this->action == ACTION_DEFINE_WITH_DATA;
@@ -2455,12 +2533,12 @@ abstract class Form extends FormBase
 
     protected function isActionExcel(): bool
     {
-        return $this->action== ACTION_EXCEL;
+        return $this->action == ACTION_EXCEL;
     }
 
     protected function isActionExport(): bool
     {
-        return $this->action== ACTION_EXPORT;
+        return $this->action == ACTION_EXPORT;
     }
 
     protected function isActionImport(): bool
@@ -2478,53 +2556,54 @@ abstract class Form extends FormBase
 //        return $this->action == ACTION_SETTING;
 //    }
 
-    protected function applyFormSetting($rec) {
+    protected function applyFormSetting($rec)
+    {
         if (!isset($rec)) {
             return;
         }
 
-        if (is_numeric($rec['page_size'])){
+        if (is_numeric($rec['page_size'])) {
             $this->pageSize = intval($rec['page_size']);
         }
 
-        if (isset($rec['order_fields'])){
-            $fields =explode(",", $rec['order_fields']);
+        if (isset($rec['order_fields'])) {
+            $fields = explode(",", $rec['order_fields']);
             // Check if new field added.
-            if (is_array($this->fieldOrder)){
+            if (is_array($this->fieldOrder)) {
                 foreach ($this->fieldOrder as $fieldName) {
-                    if (!in_array($fieldName, $fields)){
-                        $fields[]=$fieldName;
+                    if (!in_array($fieldName, $fields)) {
+                        $fields[] = $fieldName;
                     }
                 }
             }
             $widths = [];
-            if (isset($rec['width_fields'])){
+            if (isset($rec['width_fields'])) {
                 $widths = explode(",", $rec['width_fields']);
             }
             $locked = [];
-            if (isset($rec['locked_fields'])){
+            if (isset($rec['locked_fields'])) {
                 $locked = explode(",", $rec['locked_fields']);
             }
 
             $registeredFields = $this->fieldOrder;
             $this->fieldOrder = [];
-            for ($i=0;$i<count($fields);$i++){
+            for ($i = 0; $i < count($fields); $i++) {
                 $fieldName = trim($fields[$i]);
 
                 // Fields that removed
                 if (!in_array($fieldName, $registeredFields)) {
                     continue;
                 }
-                if (!in_array($fieldName, $this->fieldOrder)){
+                if (!in_array($fieldName, $this->fieldOrder)) {
                     $this->fieldOrder[] = $fields[$i];
                 }
-                if ($i<count($widths) && is_numeric($widths[$i])){
+                if ($i < count($widths) && is_numeric($widths[$i])) {
                     $this->getField($fieldName)->width = intval($widths[$i]);
                 }
                 $this->getField($fieldName)->locked = false;
-                if ($i<count($locked)){
-                    if ( $locked[$i] === 1 || $locked[$i] === true || $locked[$i] === 'true') {
-                        if (is_null($this->getField($fieldName)->groupName)){
+                if ($i < count($locked)) {
+                    if ($locked[$i] === 1 || $locked[$i] === true || $locked[$i] === 'true') {
+                        if (is_null($this->getField($fieldName)->groupName)) {
                             $this->getField($fieldName)->locked = true;
                         }
                     }
@@ -2536,32 +2615,32 @@ abstract class Form extends FormBase
         if (isset($rec['excel_fields']) && (!is_array($this->excelFields) || count($this->excelFields) == 0)) {
             $excelFields = explode(',', $rec['excel_fields']);
             // Reset
-            foreach ($this->getFieldNames() as $fieldName){
+            foreach ($this->getFieldNames() as $fieldName) {
                 $this->fields[$fieldName]->excel = false;
             }
 
-            foreach ($excelFields as $fieldName){
-                if (isset($this->fields[$fieldName])){
-                    $this->fields[$fieldName]->excel=true;
+            foreach ($excelFields as $fieldName) {
+                if (isset($this->fields[$fieldName])) {
+                    $this->fields[$fieldName]->excel = true;
                 }
             }
             $this->excelFields = $excelFields;
         }
 
-        if (isset($rec['show_fields'])){
+        if (isset($rec['show_fields'])) {
             $showFields = explode(',', $rec['show_fields']);
             // Reset
-            foreach ($this->getFieldNames() as $fieldName){
+            foreach ($this->getFieldNames() as $fieldName) {
                 $this->fields[$fieldName]->show = false;
             }
 
-            foreach ($showFields as $fieldName){
-                if (isset($this->fields[$fieldName])){
-                    $this->fields[$fieldName]->show=true;
+            foreach ($showFields as $fieldName) {
+                if (isset($this->fields[$fieldName])) {
+                    $this->fields[$fieldName]->show = true;
                 }
             }
         }
-        if (isset($rec['search_info'])){
+        if (isset($rec['search_info'])) {
             $this->searchInfo = json_decode($rec['search_info'], true);
             $keys = array_keys($this->searchInfo);
             foreach ($keys as $field) {
@@ -2570,7 +2649,7 @@ abstract class Form extends FormBase
                 }
             }
         }
-        if (isset($rec['sort_info'])){
+        if (isset($rec['sort_info'])) {
             $this->sortInfo = json_decode($rec['sort_info'], true);
             $new = [];
             foreach ($this->sortInfo as $item) {
@@ -2624,11 +2703,11 @@ abstract class Form extends FormBase
 
         $fields = [];
         $fieldNames = $this->fieldOrder;
-        if (!isset($fieldNames)){
+        if (!isset($fieldNames)) {
             $fieldNames = $this->getFieldNames();
         }
         foreach ($fieldNames as $fieldName) {
-            $field =  $this->getField($fieldName);
+            $field = $this->getField($fieldName);
             $fields[] = $field;
         }
 
@@ -2648,7 +2727,7 @@ abstract class Form extends FormBase
 
         if (is_array($this->sortInfo)) {
             $sortInfo = [];
-            foreach ($this->sortInfo as $item){
+            foreach ($this->sortInfo as $item) {
                 $sortInfo[$item['name']] = $item['type'];
             }
             $ret["sortInfo"] = $sortInfo;
@@ -2665,7 +2744,8 @@ abstract class Form extends FormBase
         return $ret;
     }
 
-    public function name2Caption() {
+    public function name2Caption()
+    {
         $fieldNames = $this->getFieldNames();
         $lang = $this->languagesManager;
         foreach ($fieldNames as $fieldName) {
@@ -2768,10 +2848,10 @@ abstract class Form extends FormBase
             if ($field->insert && $field->type != Type::File && !$field->choices) {
                 $fields .= ', ' . $field->getDatabaseField();
                 $values .= ', ' . Helper::queryEncode(@$rec[$field->name], $field->type);
-            } elseif ($field->type != Type::File && isset($field->defaultValue) && !$field->defaultValueNotInsert){
+            } elseif ($field->type != Type::File && isset($field->defaultValue) && !$field->defaultValueNotInsert) {
                 $fields .= ', ' . $field->getDatabaseField();
                 $values .= ', ' . Helper::queryEncode($field->defaultValue, $field->type);
-            }elseif ($field->key && isset($idsMax) && isset($idsMax[$field->name])) {
+            } elseif ($field->key && isset($idsMax) && isset($idsMax[$field->name])) {
                 $fields .= ', ' . $field->getDatabaseField();
                 $values .= ', ' . $idsMax[$field->name];
             }
@@ -2843,12 +2923,12 @@ abstract class Form extends FormBase
                         $rec[$field->name] = $values;
                         $ret = array_merge($ret, $queries);
                     }
-                }else{
+                } else {
                     $query = $field->getChoicesQueryInsert();
                     $query_temp = $this->format($query, $rec);
-                    if (!isset($query_temp)){
+                    if (!isset($query_temp)) {
                         throw new FormException("Can't format query\n.$query");
-                    }else{
+                    } else {
                         $query = $query_temp;
                     }
                     if (isset($query)) {
@@ -2857,17 +2937,17 @@ abstract class Form extends FormBase
                             // throw new FormException(json_encode($values));
                             $newValues = [];
                             foreach ($values as $value) {
-                                if (isset($value) && $value!=''){
-                                    if (is_numeric($value)){
+                                if (isset($value) && $value != '') {
+                                    if (is_numeric($value)) {
                                         $newValues[] = $value;
                                         $ret[] = str_replace(Constant::QueryParamValue, $value, $query);
-                                    }else{
+                                    } else {
                                         // Time to insert by function
                                         $function = $field->getChoicesAutocompleteFunction();
-                                        if (isset($function)){
+                                        if (isset($function)) {
                                             $value = $function($this->db, $value, $rec);
 
-                                            $newValues[] = (int) $value;
+                                            $newValues[] = (int)$value;
                                             $ret[] = str_replace(Constant::QueryParamValue, $value, $query);
                                         }
                                     }
@@ -2900,8 +2980,9 @@ abstract class Form extends FormBase
         $this->queryGetMaxIds[$field] = $queryGetMaxId;
     }
 
-    protected function throwInputError($message, $fields) {
-        if (!is_array($fields)){
+    protected function throwInputError($message, $fields)
+    {
+        if (!is_array($fields)) {
             $fields = explode(",", $fields);
         }
         throw new FormException(json_encode([
@@ -2959,7 +3040,7 @@ abstract class Form extends FormBase
      * @param $list
      * @param $extra
      */
-    abstract function afterData(&$data, &$total, &$summary, &$list, &$extra): void ;
+    abstract function afterData(&$data, &$total, &$summary, &$list, &$extra): void;
 
     abstract function beforeDelete(&$rs, &$message): bool;
 

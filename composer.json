@@ -18,5 +18,8 @@
         "psr-4": {
             "Minhnhc\\": "src/Lib/"
         }
-    }
+    },
+  "require": {
+    "ext-gd": "*"
+  }
 }
